@@ -1,309 +1,1580 @@
+```html
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M. Rifki Baskara | Portfolio</title>
+    <title>M. Rifki Baskara — Software Architect & Senior Fullstack Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Konfigurasi Tailwind Custom -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-black': '#050505',
+                        'luxury-gold': '#D4AF37',
+                        'gold-light': '#E8D48B',
+                        'gold-dark': '#B8960C',
+                        'surface': '#0A0A0A',
+                        'surface-light': '#111111',
+                        'border-subtle': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        'cinzel': ['Cinzel', 'serif'],
+                        'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     
     <style>
-        :root {
-            --gold: #D4AF37;
-            --soft-gold: #F9E2AF;
-            --dark-gold: #AA7C11;
-            --bg-black: #050505;
+        /* === Reset & Base Styles === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        ::selection {
+            background: rgba(212, 175, 55, 0.3);
+            color: #D4AF37;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 3px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-black);
-            color: #e5e7eb;
+            background-color: #050505;
+            color: #E0E0E0;
             overflow-x: hidden;
+            cursor: default;
         }
-        .font-luxury { font-family: 'Cinzel', serif; }
 
-        /* Efek Sorot Cahaya di Latar Belakang (Lebih Tegas & Halus) */
-        .ambient-glow {
+        /* === Efek Mouse Follower Glow === */
+        #mouse-glow {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
             pointer-events: none;
             z-index: 1;
-            transition: background 0.15s ease-out;
+            transform: translate(-50%, -50%);
+            transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        top 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Navigasi Semi-Transparan Saat Scroll */
-        .nav-glass {
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            background: rgba(5, 5, 5, 0);
-            border-bottom: 1px solid transparent;
-        }
-        .nav-glass.scrolled {
-            background: rgba(5, 5, 5, 0.65); /* Semi transparan */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 1rem 0;
+        /* === Navigasi Glassmorphism === */
+        .navbar {
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Frame Foto yang Presisi & Simetris */
-        .photo-frame {
+        .navbar.scrolled {
+            background: rgba(5, 5, 5, 0.6) !important;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        /* === Efek Shimmer Emas pada Heading === */
+        .gold-shimmer {
+            background: linear-gradient(
+                120deg,
+                #D4AF37 0%,
+                #E8D48B 25%,
+                #D4AF37 50%,
+                #B8960C 75%,
+                #D4AF37 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* === Garis Aksen Geometris === */
+        .accent-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, #D4AF37, transparent);
+        }
+
+        .accent-line-center {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 0 auto;
+        }
+
+        /* === Efek Foto Profil === */
+        .portrait-frame {
             position: relative;
-            width: 100%;
-            max-width: 420px;
-            aspect-ratio: 3/4;
-            border-radius: 24px;
             overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-        }
-        .photo-frame:hover {
-            border-color: var(--gold);
-            box-shadow: 0 40px 80px rgba(212, 175, 55, 0.1);
         }
 
-        /* Gradasi Emas Mewah */
-        .text-gold {
-    /* 1. Gunakan background-image untuk gradasi */
-    background-image: linear-gradient(135deg, #F9E2AF 0%, #D4AF37 50%, #AA7C11 100%);
-    
-    /* 2. Pastikan urutan clip tepat */
-    background-clip: text;
-    -webkit-background-clip: text; /* Penting untuk Chrome/Safari */
-    
-    /* 3. Harus menyertakan fill-color agar teks transparan */
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback */
+        .portrait-frame img {
+            filter: grayscale(100%);
+            transition: filter 1s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-    /* 4. Tips Tambahan: Agar gradasi lebih halus (Smooth) */
-    display: inline-block; /* Memastikan area clip sesuai ukuran teks */
-    background-size: 200% auto;
-    transition: background-position 0.8s ease;
-}
+        .portrait-frame:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
 
-.text-gold:hover {
-    background-position: right center; /* Efek kilauan saat disentuh */
-}
+        .portrait-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+            border-radius: inherit;
+        }
 
-        /* Tombol Premium */
-        .btn-premium {
+        /* === Efek Hover Card Proyek === */
+        .project-card {
             position: relative;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
+            background: #0A0A0A;
+            border: 1px solid #1A1A1A;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        .project-card:hover::before {
+            background: linear-gradient(135deg, #D4AF37, transparent 50%, #D4AF37);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        /* === Skill Bar Animasi === */
+        .skill-bar-fill {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .skill-bar-fill.animate {
+            width: var(--skill-width);
+        }
+
+        /* === Link Navigasi Hover === */
+        .nav-link {
+            position: relative;
+            transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #D4AF37;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+
+        /* === Statistik Counter === */
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 40px;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+        }
+
+        .stat-item:last-child::after {
+            display: none;
+        }
+
+        /* === Timeline === */
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #D4AF37;
+            border-radius: 50%;
+            background: #050505;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 3.5px;
+            top: 20px;
+            width: 1px;
+            height: calc(100% - 8px);
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.3), transparent);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        /* === Tombol CTA === */
+        .btn-gold {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        .btn-gold:hover {
+            background: rgba(212, 175, 55, 0.08);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-gold-fill {
+            background: #D4AF37;
             color: #050505;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .btn-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
-            filter: brightness(1.1);
+            font-weight: 600;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Kartu dengan Efek Border Glow saat Hover */
-        .luxury-card {
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .luxury-card:hover {
-            background: rgba(255, 255, 255, 0.02);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-8px);
+        .btn-gold-fill:hover {
+            background: #E8D48B;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: var(--bg-black); }
-        ::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 10px; }
+        /* === Animasi Fade-in Custom === */
+        [data-aos] {
+            transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+        }
+
+        /* === Grid Dekoratif === */
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* === Section Divider === */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+        }
+
+        /* === Indikator Tech Stack === */
+        .tech-tag {
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            color: rgba(212, 175, 55, 0.7);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .tech-tag:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* === Efek Pulse pada Status === */
+        .pulse-dot {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* === Hamburger Menu === */
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: #D4AF37;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* === Mobile Menu === */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* === Floating geometric accents === */
+        .geo-accent {
+            position: absolute;
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            pointer-events: none;
+        }
+
+        /* === Contact form inputs === */
+        .form-input {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid #1A1A1A;
+            color: #E0E0E0;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Smooth page load */
+        body {
+            opacity: 0;
+            animation: pageLoad 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageLoad {
+            to { opacity: 1; }
+        }
+
+        /* Real-time clock styling */
+        .realtime-display {
+            font-variant-numeric: tabular-nums;
+        }
     </style>
 </head>
-<body>
 
-    <div class="ambient-glow" id="glow"></div>
+<body class="bg-deep-black font-jakarta antialiased">
 
-    <nav id="navbar" class="fixed w-full z-[100] nav-glass py-6">
-        <div class="container mx-auto px-6 lg:px-20 flex justify-between items-center">
-            <div class="text-xl font-luxury font-bold tracking-[0.25em] text-gold uppercase">Baskara</div>
-            
-            <div class="hidden lg:flex items-center space-x-12 text-[10px] font-bold uppercase tracking-[0.3em]">
-                <a href="#home" class="hover:text-white transition duration-300">Beranda</a>
-                <a href="#profil" class="hover:text-white transition duration-300">Profil</a>
-                <a href="#portfolio" class="hover:text-white transition duration-300">Portofolio</a>
-                <a href="#resume" class="hover:text-white transition duration-300">Riwayat</a>
-                <a href="#kontak" class="btn-premium px-8 py-2.5 rounded-full text-[9px]">Hubungi Saya</a>
+    <!-- Efek Mouse Follower Glow -->
+    <div id="mouse-glow"></div>
+
+    <!-- ============================== -->
+    <!-- NAVIGASI UTAMA                 -->
+    <!-- ============================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo / Nama -->
+                <a href="#hero" class="font-cinzel text-luxury-gold text-lg tracking-[0.2em] font-medium">
+                    MRB
+                </a>
+
+                <!-- Link Navigasi Desktop -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#tentang" class="nav-link font-jakarta text-sm text-white/60 tracking-wider uppercase">Tentang</a>
+                    <a href="#keahlian" class="nav-link font-jakarta text-sm text-white/60 tracking-wider uppercase">Keahlian</a>
+                    <a href="#proyek" class="nav-link font-jakarta text-sm text-white/60 tracking-wider uppercase">Proyek</a>
+                    <a href="#pengalaman" class="nav-link font-jakarta text-sm text-white/60 tracking-wider uppercase">Pengalaman</a>
+                    <a href="#kontak" class="nav-link font-jakarta text-sm text-white/60 tracking-wider uppercase">Kontak</a>
+                </div>
+
+                <!-- Status & Waktu Realtime -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></div>
+                        <span class="text-xs text-white/40 tracking-wider uppercase">Tersedia</span>
+                    </div>
+                    <div class="w-px h-4 bg-white/10"></div>
+                    <span id="realtime-clock" class="realtime-display text-xs text-white/30 tracking-wider font-light"></span>
+                </div>
+
+                <!-- Tombol Hamburger Mobile -->
+                <button class="hamburger md:hidden flex flex-col space-y-1.5 p-2" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="min-h-screen flex items-center pt-24 px-6 lg:px-20">
-        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            <div data-aos="fade-right" data-aos-duration="1200" class="z-10">
-                <p class="text-gold font-semibold text-xs uppercase tracking-[0.5em] mb-4">IT Programmer & Fullstack Developer</p>
-                <h1 class="font-luxury text-4xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                    M. Rifki <br> Baskara
-                </h1>
-                <p class="text-gray-400 text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
-                    Spesialis dalam merancang sistem web <span class="italic text-gray-200">real-time</span> yang andal, aman, dan dioptimalkan secara presisi untuk kenyamanan pengguna mobile.
-                </p>
-                <div class="flex items-center gap-8">
-                    <a href="#portfolio" class="btn-premium px-8 py-4 rounded-full text-xs uppercase">Eksplorasi Karya</a>
-                    <a href="#kontak" class="text-gray-400 hover:text-white text-xs font-bold uppercase tracking-widest border-b border-gray-800 pb-1.5 hover:border-gold transition-all duration-300">Hubungi</a>
-                </div>
-            </div>
-
-            <div class="flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="1200">
-                <div class="photo-frame group">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-60"></div>
-                    <img src="https://media.discordapp.net/attachments/1341983604217217158/1412457653866725386/ChatGPT_Image_Sep_2_2025_01_38_49_PM.png?ex=69fd56f2&is=69fc0572&hm=07fe480b484c3fb9013ea850eeb26f8c547f7a98f9d835d0d2014da361e3edb5&=&format=webp&quality=lossless&width=788&height=525" alt="M. Rifki Baskara" class="w-full h-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105">
-                    
-                    <div class="absolute bottom-6 left-6 z-20 flex gap-2">
-                        <span class="bg-black/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-lg text-[9px] uppercase tracking-widest text-gray-300">Flask</span>
-                        <span class="bg-black/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-lg text-[9px] uppercase tracking-widest text-gray-300">Socket.IO</span>
-                    </div>
-                </div>
-            </div>
-
+    <!-- Menu Mobile -->
+    <div class="mobile-menu fixed top-0 right-0 w-full h-full z-40 bg-deep-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8">
+        <a href="#tentang" onclick="toggleMobileMenu()" class="font-cinzel text-xl text-white/70 tracking-[0.15em] hover:text-luxury-gold transition-colors duration-500">Tentang</a>
+        <a href="#keahlian" onclick="toggleMobileMenu()" class="font-cinzel text-xl text-white/70 tracking-[0.15em] hover:text-luxury-gold transition-colors duration-500">Keahlian</a>
+        <a href="#proyek" onclick="toggleMobileMenu()" class="font-cinzel text-xl text-white/70 tracking-[0.15em] hover:text-luxury-gold transition-colors duration-500">Proyek</a>
+        <a href="#pengalaman" onclick="toggleMobileMenu()" class="font-cinzel text-xl text-white/70 tracking-[0.15em] hover:text-luxury-gold transition-colors duration-500">Pengalaman</a>
+        <a href="#kontak" onclick="toggleMobileMenu()" class="font-cinzel text-xl text-white/70 tracking-[0.15em] hover:text-luxury-gold transition-colors duration-500">Kontak</a>
+        <div class="accent-line-center mt-8"></div>
+        <div class="flex items-center space-x-2 mt-4">
+            <div class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></div>
+            <span class="text-xs text-white/40 tracking-wider uppercase">Tersedia untuk Proyek</span>
         </div>
-    </section>
+    </div>
 
-    <section id="profil" class="py-32 bg-[#030303]">
-        <div class="container mx-auto px-6 lg:px-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                <div data-aos="fade-up" data-aos-duration="1000">
-                    <h2 class="font-luxury text-2xl lg:text-3xl text-white mb-6 uppercase tracking-wider">Spesialisasi Teknis</h2>
-                    <p class="text-gray-400 leading-relaxed mb-8 text-sm md:text-base font-light">
-                        Mengintegrasikan logika backend yang kuat menggunakan **Python (Flask)** dengan sinkronisasi UI real-time menggunakan **SocketIO** serta penyimpanan data yang optimal pada database **MySQL**.
-                    </p>
-                    <div class="grid grid-cols-2 gap-8">
-                        <div class="border-t border-white/10 pt-6">
-                            <span class="text-gold font-bold text-2xl">Real-Time</span>
-                            <p class="text-[9px] uppercase tracking-widest mt-1.5 text-gray-500">Event-driven Architecture</p>
-                        </div>
-                        <div class="border-t border-white/10 pt-6">
-                            <span class="text-gold font-bold text-2xl">Secure</span>
-                            <p class="text-[9px] uppercase tracking-widest mt-1.5 text-gray-500">Werkzeug Hashing Standards</p>
-                        </div>
-                    </div>
-                </div>
+
+    <!-- ============================== -->
+    <!-- HERO SECTION                   -->
+    <!-- ============================== -->
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Dekorasi Geometris Background -->
+        <div class="absolute inset-0 grid-pattern opacity-40"></div>
+        <div class="geo-accent w-64 h-64 rotate-45 -top-32 -right-32 opacity-30"></div>
+        <div class="geo-accent w-48 h-48 rotate-12 bottom-20 -left-24 opacity-20"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center min-h-screen py-32">
                 
-                <div class="grid grid-cols-1 gap-6" data-aos="fade-left" data-aos-duration="1000">
-                    <div class="luxury-card p-8 rounded-2xl">
-                        <div class="flex items-center gap-4 mb-3">
-                            <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                            <h4 class="font-bold text-white text-xs uppercase tracking-widest">Fullstack Integration</h4>
-                        </div>
-                        <p class="text-gray-400 text-xs font-light leading-relaxed">Pengembangan arsitektur web yang seimbang antara kemudahan navigasi frontend dan kecepatan respons backend.</p>
+                <!-- Kolom Kiri: Tipografi & Bio -->
+                <div class="order-2 lg:order-1 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1200">
+                    <!-- Label Peran -->
+                    <div class="flex items-center justify-center lg:justify-start space-x-4 mb-8">
+                        <div class="accent-line"></div>
+                        <span class="text-xs text-luxury-gold/70 tracking-[0.3em] uppercase font-jakarta font-light">Software Architect</span>
                     </div>
-                    <div class="luxury-card p-8 rounded-2xl">
-                        <div class="flex items-center gap-4 mb-3">
-                            <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                            <h4 class="font-bold text-white text-xs uppercase tracking-widest">Data Protection</h4>
+
+                    <!-- Nama Utama -->
+                    <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-[1.1] mb-6">
+                        <span class="block text-white/90">M. Rifki</span>
+                        <span class="block gold-shimmer mt-2">Baskara</span>
+                    </h1>
+
+                    <!-- Deskripsi Singkat -->
+                    <p class="text-white/40 font-jakarta font-light text-base lg:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 mb-10">
+                        Merancang arsitektur perangkat lunak yang elegan dan membangun solusi <em class="text-white/60 not-italic">fullstack</em> berkinerja tinggi untuk skala enterprise.
+                    </p>
+
+                    <!-- Statistik Ringkas -->
+                    <div class="flex items-center justify-center lg:justify-start space-x-8 sm:space-x-12 mb-12">
+                        <div class="stat-item pr-8 sm:pr-12">
+                            <div class="font-cinzel text-2xl sm:text-3xl text-luxury-gold font-semibold" data-count="8">0</div>
+                            <div class="text-xs text-white/30 tracking-wider uppercase mt-1">Tahun</div>
                         </div>
-                        <p class="text-gray-400 text-xs font-light leading-relaxed">Mengamankan kredensial data pengguna menggunakan enkripsi mutakhir serta proteksi penanganan rute.</p>
+                        <div class="stat-item pr-8 sm:pr-12">
+                            <div class="font-cinzel text-2xl sm:text-3xl text-luxury-gold font-semibold" data-count="50">0</div>
+                            <div class="text-xs text-white/30 tracking-wider uppercase mt-1">Proyek</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="font-cinzel text-2xl sm:text-3xl text-luxury-gold font-semibold" data-count="30">0</div>
+                            <div class="text-xs text-white/30 tracking-wider uppercase mt-1">Klien</div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol CTA -->
+                    <div class="flex items-center justify-center lg:justify-start space-x-4">
+                        <a href="#proyek" class="btn-gold px-8 py-3.5 text-sm tracking-wider uppercase font-jakarta font-medium rounded-sm">
+                            Lihat Karya
+                        </a>
+                        <a href="#kontak" class="btn-gold-fill px-8 py-3.5 text-sm tracking-wider uppercase font-jakarta rounded-sm">
+                            Hubungi
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Foto Profil -->
+                <div class="order-1 lg:order-2 flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="relative">
+                        <!-- Bingkai Dekoratif -->
+                        <div class="absolute -inset-4 border border-luxury-gold/10 rounded-sm"></div>
+                        <div class="absolute -inset-8 border border-luxury-gold/5 rounded-sm"></div>
+                        
+                        <!-- Foto Utama -->
+                        <div class="portrait-frame w-72 h-96 sm:w-80 sm:h-[440px] lg:w-96 lg:h-[520px] rounded-sm overflow-hidden relative">
+                            <img 
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" 
+                                alt="M. Rifki Baskara — Software Architect" 
+                                class="w-full h-full object-cover object-center"
+                            >
+                            <!-- Overlay Gradien Bawah -->
+                            <div class="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-deep-black/80 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        <!-- Aksen Sudut -->
+                        <div class="absolute -bottom-3 -right-3 w-16 h-16 border-r border-b border-luxury-gold/20"></div>
+                        <div class="absolute -top-3 -left-3 w-16 h-16 border-l border-t border-luxury-gold/20"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Indikator Scroll -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-3" data-aos="fade-up" data-aos-delay="800">
+            <span class="text-[10px] text-white/20 tracking-[0.3em] uppercase">Gulir</span>
+            <div class="w-px h-8 bg-gradient-to-b from-luxury-gold/40 to-transparent animate-bounce"></div>
+        </div>
     </section>
 
-    <section id="portfolio" class="py-32">
-        <div class="container mx-auto px-6 lg:px-20">
-            <div class="flex items-center gap-6 mb-16" data-aos="fade-right">
-                <h2 class="font-luxury text-3xl text-white uppercase tracking-wider">Karya Pilihan</h2>
-                <div class="h-[1px] flex-grow bg-white/10"></div>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- TENTANG SECTION                -->
+    <!-- ============================== -->
+    <section id="tentang" class="relative py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Profil</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Tentang Saya</h2>
+                <div class="accent-line-center"></div>
             </div>
 
-            <div class="luxury-card rounded-3xl overflow-hidden p-8 lg:p-16" data-aos="zoom-in-up" data-aos-duration="1200">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <span class="text-gold font-bold text-[9px] uppercase tracking-[0.4em] mb-3 block">Featured Project</span>
-                        <h3 class="font-luxury text-2xl lg:text-3xl text-white mb-6 uppercase tracking-wide">BASPremium</h3>
-                        <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed mb-8">
-                            Platform e-commerce interaktif yang memadukan toko online dengan fitur kuis kompetitif berbasis real-time. Memanfaatkan performa transmisi data asinkronus tanpa muat ulang halaman.
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+                <!-- Kolom Kiri: Bio Lengkap -->
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <p class="text-white/50 font-jakarta font-light text-base leading-[1.9] mb-6">
+                        Seorang <span class="text-white/80">Software Architect</span> dan <span class="text-white/80">Senior Fullstack Developer</span> 
+                        dengan pengalaman lebih dari 8 tahun dalam membangun sistem perangkat lunak berskala besar. Spesialisasi dalam 
+                        merancang arsitektur <span class="text-luxury-gold/70">microservices</span>, sistem terdistribusi, dan aplikasi 
+                        real-time yang melayani jutaan pengguna.
+                    </p>
+                    <p class="text-white/50 font-jakarta font-light text-base leading-[1.9] mb-8">
+                        Pendekatan yang saya gunakan mengedepankan prinsip <span class="text-white/80">clean architecture</span>, 
+                        <span class="text-white/80">domain-driven design</span>, dan praktik terbaik engineering modern. Setiap solusi 
+                        yang saya bangun dirancang untuk ketahanan jangka panjang, skalabilitas, dan performa optimal.
+                    </p>
+
+                    <!-- Filosofi Desain -->
+                    <div class="border-l border-luxury-gold/20 pl-6 mt-8">
+                        <p class="text-white/60 font-jakarta italic text-sm leading-relaxed">
+                            "Arsitektur yang baik adalah investasi — bukan beban. Kode yang elegan adalah kode yang berbicara tentang intensi, bukan kompleksitas."
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="bg-white/5 px-3 py-1.5 rounded text-[9px] uppercase tracking-wider text-gray-400">Python Flask</span>
-                            <span class="bg-white/5 px-3 py-1.5 rounded text-[9px] uppercase tracking-wider text-gray-400">Socket.IO</span>
-                            <span class="bg-white/5 px-3 py-1.5 rounded text-[9px] uppercase tracking-wider text-gray-400">MySQL</span>
+                        <span class="text-xs text-luxury-gold/50 mt-3 block tracking-wider">— M. RIFKI BASKARA</span>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Data Profil -->
+                <div data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="space-y-6">
+                        <!-- Item Profil -->
+                        <div class="flex items-start space-x-6 py-4 border-b border-white/5">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Nama</span>
+                            <span class="text-sm text-white/70 font-medium">M. Rifki Baskara</span>
+                        </div>
+                        <div class="flex items-start space-x-6 py-4 border-b border-white/5">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Peran</span>
+                            <span class="text-sm text-white/70 font-medium">Software Architect & Senior Fullstack Developer</span>
+                        </div>
+                        <div class="flex items-start space-x-6 py-4 border-b border-white/5">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Lokasi</span>
+                            <span class="text-sm text-white/70 font-medium">Jakarta, Indonesia</span>
+                        </div>
+                        <div class="flex items-start space-x-6 py-4 border-b border-white/5">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Pendidikan</span>
+                            <span class="text-sm text-white/70 font-medium">S1 Teknik Informatika</span>
+                        </div>
+                        <div class="flex items-start space-x-6 py-4 border-b border-white/5">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Bahasa</span>
+                            <span class="text-sm text-white/70 font-medium">Indonesia, English</span>
+                        </div>
+                        <div class="flex items-start space-x-6 py-4">
+                            <span class="text-xs text-white/25 tracking-wider uppercase w-28 shrink-0 pt-0.5">Status</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></div>
+                                <span class="text-sm text-green-400/80 font-medium">Tersedia untuk Proyek</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="aspect-video bg-black/40 rounded-2xl border border-white/5 flex items-center justify-center">
-                        <span class="text-[10px] tracking-[0.4em] uppercase text-gray-600 font-luxury">Platform Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- KEAHLIAN / SKILL SECTION       -->
+    <!-- ============================== -->
+    <section id="keahlian" class="relative py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Kompetensi</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Keahlian Teknis</h2>
+                <div class="accent-line-center"></div>
+            </div>
+
+            <!-- Grid Keahlian -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 mb-20">
+                <!-- Kolom Kiri: Skill Bars -->
+                <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000">
+                    <h3 class="font-cinzel text-lg text-white/70 mb-8 tracking-wider">Bahasa & Framework</h3>
+                    
+                    <!-- Skill Item -->
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">TypeScript / JavaScript</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">97%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 97%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">React / Next.js</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">95%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 95%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">Node.js / NestJS</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">93%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 93%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">Go / Golang</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">85%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">Python / FastAPI</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">82%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 82%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">PostgreSQL / MongoDB</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">90%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Kompetensi Arsitektur -->
+                <div class="space-y-8" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <h3 class="font-cinzel text-lg text-white/70 mb-8 tracking-wider">Arsitektur & DevOps</h3>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">Microservices Architecture</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">96%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 96%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">Docker / Kubernetes</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">91%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 91%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">AWS / GCP Cloud</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">88%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">CI/CD Pipeline</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">89%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 89%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">System Design</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">94%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 94%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-sm text-white/60 font-jakarta">GraphQL / REST API</span>
+                            <span class="text-xs text-luxury-gold/60 font-jakarta">92%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/5 rounded-full">
+                            <div class="skill-bar-fill h-full bg-gradient-to-r from-luxury-gold to-gold-light rounded-full" style="--skill-width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Stack Tags -->
+            <div class="text-center" data-aos="fade-up" data-aos-duration="1000">
+                <h3 class="font-cinzel text-lg text-white/70 mb-8 tracking-wider">Tech Stack</h3>
+                <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">React</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Next.js</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">TypeScript</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Node.js</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">NestJS</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Go</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Python</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">PostgreSQL</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">MongoDB</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Redis</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Docker</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Kubernetes</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">AWS</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">GraphQL</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Kafka</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Terraform</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Prisma</span>
+                    <span class="tech-tag px-4 py-2 text-xs tracking-wider rounded-sm">Tailwind CSS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- PROYEK / PROJECTS SECTION      -->
+    <!-- ============================== -->
+    <section id="proyek" class="relative py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Portofolio</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Proyek Unggulan</h2>
+                <div class="accent-line-center"></div>
+            </div>
+
+            <!-- Grid Proyek -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Proyek 1 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2024</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">FinTech Platform</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        Platform keuangan digital dengan arsitektur microservices, menangani 2M+ transaksi harian dengan latensi &lt;50ms.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Go</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">gRPC</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">K8s</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">PostgreSQL</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Proyek 2 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2024</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">E-Commerce Engine</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        Mesin e-commerce headless dengan real-time inventory, payment gateway terintegrasi, dan dashboard analytics.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Next.js</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">NestJS</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Redis</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Stripe</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Proyek 3 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2023</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">Analytics Dashboard</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        Dashboard analitik real-time dengan visualisasi data interaktif, stream processing, dan machine learning insights.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">React</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">D3.js</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Kafka</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Python</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Proyek 4 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2023</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">Healthcare App</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        Aplikasi telemedicine dengan video call real-time, e-prescriptions, dan integrasi sistem rekam medis elektronik.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">React Native</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">WebRTC</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Node.js</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">FHIR</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Proyek 5 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2023</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">IoT Platform</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        Platform IoT enterprise dengan MQTT broker, real-time device monitoring, dan edge computing untuk 100K+ perangkat.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Go</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">MQTT</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">TimescaleDB</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">AWS IoT</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Proyek 6 -->
+                <div class="project-card rounded-sm p-8 flex flex-col" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 border border-luxury-gold/20 rounded-sm flex items-center justify-center">
+                            <svg class="w-5 h-5 text-luxury-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] text-white/20 tracking-wider uppercase">2022</span>
+                    </div>
+                    <h4 class="font-cinzel text-lg text-white/85 mb-3">Auth Gateway</h4>
+                    <p class="text-sm text-white/40 font-light leading-relaxed mb-6 flex-1">
+                        API Gateway dengan OAuth 2.0, RBAC, rate limiting, dan audit logging untuk ekosistem microservices enterprise.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Node.js</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">Kong</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">OAuth</span>
+                        <span class="text-[10px] text-luxury-gold/50 border border-luxury-gold/10 px-2.5 py-1 rounded-sm">JWT</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-luxury-gold/50 hover:text-luxury-gold transition-colors duration-500 cursor-pointer">
+                        <span class="text-xs tracking-wider uppercase">Detail</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                        </svg>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="resume" class="py-32 bg-[#030303]">
-        <div class="container mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <h3 class="font-luxury text-lg text-white mb-10 uppercase tracking-widest border-b border-white/5 pb-4">Pendidikan</h3>
-                <div class="border-l border-white/10 pl-6 space-y-12">
-                    <div class="relative">
-                        <div class="absolute w-2 h-2 bg-gold rounded-full -left-[31px] top-1.5"></div>
-                        <p class="text-gold text-[10px] font-bold uppercase tracking-widest mb-1">Universitas Sriwijaya</p>
-                        <h4 class="font-bold text-white text-sm">Sistem Komputer</h4>
-                        <p class="text-xs text-gray-500 mt-2">Mempelajari arsitektur perangkat keras dan rekayasa perangkat lunak.</p>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- PENGALAMAN / EXPERIENCE        -->
+    <!-- ============================== -->
+    <section id="pengalaman" class="relative py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Karir</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Pengalaman Profesional</h2>
+                <div class="accent-line-center"></div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="max-w-3xl mx-auto space-y-0">
+                <!-- Item 1 -->
+                <div class="timeline-item pb-12" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                        <h4 class="font-cinzel text-lg text-white/85">Software Architect</h4>
+                        <span class="text-xs text-luxury-gold/50 tracking-wider mt-1 sm:mt-0">2022 — Sekarang</span>
+                    </div>
+                    <p class="text-sm text-luxury-gold/60 mb-3 tracking-wider">PT. Digital Nusantara Teknologi</p>
+                    <p class="text-sm text-white/40 font-light leading-relaxed">
+                        Memimpin tim arsitektur dalam merancang dan mengimplementasikan sistem terdistribusi berskala enterprise. 
+                        Bertanggung jawab atas keputusan teknis strategis, code review, dan mentoring developer senior.
+                    </p>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="timeline-item pb-12" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                        <h4 class="font-cinzel text-lg text-white/85">Senior Fullstack Developer</h4>
+                        <span class="text-xs text-luxury-gold/50 tracking-wider mt-1 sm:mt-0">2020 — 2022</span>
+                    </div>
+                    <p class="text-sm text-luxury-gold/60 mb-3 tracking-wider">Tokopedia (GoTo Group)</p>
+                    <p class="text-sm text-white/40 font-light leading-relaxed">
+                        Mengembangkan fitur-fitur core platform dengan traffic tinggi. Optimasi performa aplikasi, 
+                        implementasi A/B testing framework, dan migrasi monolith ke arsitektur microservices.
+                    </p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="timeline-item pb-12" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                        <h4 class="font-cinzel text-lg text-white/85">Fullstack Developer</h4>
+                        <span class="text-xs text-luxury-gold/50 tracking-wider mt-1 sm:mt-0">2018 — 2020</span>
+                    </div>
+                    <p class="text-sm text-luxury-gold/60 mb-3 tracking-wider">Traveloka</p>
+                    <p class="text-sm text-white/40 font-light leading-relaxed">
+                        Membangun dan memelihara sistem booking dan payment. Implementasi real-time notification system 
+                        dan integrasi dengan berbagai payment gateway regional.
+                    </p>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                        <h4 class="font-cinzel text-lg text-white/85">Junior Developer</h4>
+                        <span class="text-xs text-luxury-gold/50 tracking-wider mt-1 sm:mt-0">2016 — 2018</span>
+                    </div>
+                    <p class="text-sm text-luxury-gold/60 mb-3 tracking-wider">Freelance & Startup</p>
+                    <p class="text-sm text-white/40 font-light leading-relaxed">
+                        Memulai karir dengan membangun berbagai proyek web dan mobile untuk startup lokal. 
+                        Fokus pada pengembangan skill dan eksplorasi berbagai teknologi modern.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- INTEGRASI DATA REALTIME        -->
+    <!-- ============================== -->
+    <section class="relative py-32 lg:py-40 overflow-hidden">
+        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        <div class="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Live Data</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Metrik Realtime</h2>
+                <div class="accent-line-center"></div>
+                <p class="text-sm text-white/30 font-light mt-6 max-w-md mx-auto">Simulasi dashboard monitoring yang menampilkan data performa sistem secara real-time</p>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <!-- Metrik 1 -->
+                <div class="project-card rounded-sm p-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                    <div class="text-xs text-white/25 tracking-wider uppercase mb-4">Uptime</div>
+                    <div id="metric-uptime" class="font-cinzel text-2xl lg:text-3xl text-luxury-gold font-semibold mb-2">99.98%</div>
+                    <div class="flex items-center justify-center space-x-1">
+                        <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-[10px] text-green-500/70">+0.02%</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 2 -->
+                <div class="project-card rounded-sm p-6 text-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                    <div class="text-xs text-white/25 tracking-wider uppercase mb-4">Response</div>
+                    <div id="metric-response" class="font-cinzel text-2xl lg:text-3xl text-luxury-gold font-semibold mb-2">42ms</div>
+                    <div class="flex items-center justify-center space-x-1">
+                        <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-[10px] text-green-500/70">-3ms</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 3 -->
+                <div class="project-card rounded-sm p-6 text-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="text-xs text-white/25 tracking-wider uppercase mb-4">Requests/s</div>
+                    <div id="metric-requests" class="font-cinzel text-2xl lg:text-3xl text-luxury-gold font-semibold mb-2">12.4K</div>
+                    <div class="flex items-center justify-center space-x-1">
+                        <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-[10px] text-green-500/70">+1.2K</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 4 -->
+                <div class="project-card rounded-sm p-6 text-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                    <div class="text-xs text-white/25 tracking-wider uppercase mb-4">Error Rate</div>
+                    <div id="metric-error" class="font-cinzel text-2xl lg:text-3xl text-luxury-gold font-semibold mb-2">0.01%</div>
+                    <div class="flex items-center justify-center space-x-1">
+                        <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-[10px] text-green-500/70">-0.005%</span>
                     </div>
                 </div>
             </div>
-            
-            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                <h3 class="font-luxury text-lg text-white mb-10 uppercase tracking-widest border-b border-white/5 pb-4">Pengalaman</h3>
-                <div class="border-l border-white/10 pl-6 space-y-12">
-                    <div class="relative">
-                        <div class="absolute w-2 h-2 bg-gold rounded-full -left-[31px] top-1.5"></div>
-                        <p class="text-gold text-[10px] font-bold uppercase tracking-widest mb-1">PT Pupuk Sriwidjaja</p>
-                        <h4 class="font-bold text-white text-sm">IT Programmer</h4>
-                        <p class="text-xs text-gray-500 mt-2">Bertanggung jawab atas optimalisasi sistem dan pengembangan rute modul internal.</p>
+
+            <!-- Simulated Activity Log -->
+            <div class="mt-16 max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="project-card rounded-sm p-6 overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs text-white/30 tracking-wider uppercase">Activity Log</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></div>
+                            <span class="text-[10px] text-green-400/60">LIVE</span>
+                        </div>
+                    </div>
+                    <div id="activity-log" class="space-y-2 font-mono text-xs h-32 overflow-hidden">
+                        <!-- Log items akan diisi oleh JavaScript -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="kontak" class="py-32">
-        <div class="container mx-auto px-6 text-center" data-aos="fade-up" data-aos-duration="1200">
-            <h2 class="font-luxury text-3xl lg:text-4xl text-white mb-6 uppercase tracking-wider">Mulai Kerja Sama</h2>
-            <p class="text-gray-500 max-w-md mx-auto mb-10 text-sm font-light">Saya selalu terbuka untuk mendiskusikan peluang kolaborasi teknis baru.</p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                <a href="mailto:rifki.baskara@email.com" class="btn-premium px-10 py-4 rounded-full text-xs uppercase">Kirim Email</a>
-                <a href="https://wa.me/nomoranda" class="text-gray-400 hover:text-white transition font-bold text-xs uppercase tracking-[0.2em] border-b border-transparent hover:border-gold pb-1">Hubungi WhatsApp</a>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+
+    <!-- ============================== -->
+    <!-- KONTAK / CONTACT SECTION       -->
+    <!-- ============================== -->
+    <section id="kontak" class="relative py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <!-- Header Section -->
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-xs text-luxury-gold/50 tracking-[0.4em] uppercase font-jakarta font-light">Kolaborasi</span>
+                <h2 class="font-cinzel text-3xl lg:text-4xl text-white/90 mt-4 mb-6">Hubungi Saya</h2>
+                <div class="accent-line-center"></div>
+                <p class="text-sm text-white/30 font-light mt-6 max-w-md mx-auto">Tertarik untuk berkolaborasi atau memiliki proyek yang membutuhkan arsitektur software berkualitas tinggi?</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+                <!-- Kolom Kiri: Info Kontak -->
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <div class="space-y-10">
+                        <!-- Email -->
+                        <div class="flex items-start space-x-5">
+                            <div class="w-12 h-12 border border-luxury-gold/15 rounded-sm flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-luxury-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/25 tracking-wider uppercase block mb-1">Email</span>
+                                <a href="mailto:rifki@baskara.dev" class="text-sm text-white/70 hover:text-luxury-gold transition-colors duration-500">rifki@baskara.dev</a>
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="flex items-start space-x-5">
+                            <div class="w-12 h-12 border border-luxury-gold/15 rounded-sm flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-luxury-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/25 tracking-wider uppercase block mb-1">LinkedIn</span>
+                                <a href="#" class="text-sm text-white/70 hover:text-luxury-gold transition-colors duration-500">linkedin.com/in/rifkibaskara</a>
+                            </div>
+                        </div>
+
+                        <!-- GitHub -->
+                        <div class="flex items-start space-x-5">
+                            <div class="w-12 h-12 border border-luxury-gold/15 rounded-sm flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-luxury-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/25 tracking-wider uppercase block mb-1">GitHub</span>
+                                <a href="#" class="text-sm text-white/70 hover:text-luxury-gold transition-colors duration-500">github.com/rifkibaskara</a>
+                            </div>
+                        </div>
+
+                        <!-- Lokasi -->
+                        <div class="flex items-start space-x-5">
+                            <div class="w-12 h-12 border border-luxury-gold/15 rounded-sm flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-luxury-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/25 tracking-wider uppercase block mb-1">Lokasi</span>
+                                <span class="text-sm text-white/70">Jakarta, Indonesia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Form Kontak -->
+                <div data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <form id="contact-form" class="space-y-6" onsubmit="handleSubmit(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-xs text-white/25 tracking-wider uppercase block mb-2">Nama</label>
+                                <input type="text" placeholder="Nama Anda" class="form-input w-full px-4 py-3.5 text-sm rounded-sm" required>
+                            </div>
+                            <div>
+                                <label class="text-xs text-white/25 tracking-wider uppercase block mb-2">Email</label>
+                                <input type="email" placeholder="email@anda.com" class="form-input w-full px-4 py-3.5 text-sm rounded-sm" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-white/25 tracking-wider uppercase block mb-2">Subjek</label>
+                            <input type="text" placeholder="Topik pembicaraan" class="form-input w-full px-4 py-3.5 text-sm rounded-sm" required>
+                        </div>
+                        <div>
+                            <label class="text-xs text-white/25 tracking-wider uppercase block mb-2">Pesan</label>
+                            <textarea rows="5" placeholder="Ceritakan tentang proyek Anda..." class="form-input w-full px-4 py-3.5 text-sm rounded-sm resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-gold-fill w-full py-4 text-sm tracking-wider uppercase font-jakarta rounded-sm">
+                            <span id="btn-text">Kirim Pesan</span>
+                            <span id="btn-success" class="hidden">Pesan Terkirim ✓</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-16 border-t border-white/5 text-center text-[9px] text-gray-600 tracking-[0.5em] font-bold uppercase">
-        &copy; 2026 M. Rifki Baskara &bull; All Rights Reserved
+
+    <!-- ============================== -->
+    <!-- FOOTER                         -->
+    <!-- ============================== -->
+    <footer class="relative border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+                <!-- Logo Footer -->
+                <div class="text-center md:text-left">
+                    <a href="#hero" class="font-cinzel text-luxury-gold text-lg tracking-[0.2em] font-medium">MRB</a>
+                    <p class="text-xs text-white/20 mt-2 tracking-wider">Software Architect & Senior Fullstack Developer</p>
+                </div>
+
+                <!-- Hak Cipta -->
+                <div class="text-center">
+                    <p class="text-xs text-white/15 tracking-wider">&copy; <span id="footer-year"></span> M. Rifki Baskara. Seluruh hak dilindungi.</p>
+                </div>
+
+                <!-- Sosial Media -->
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-white/20 hover:text-luxury-gold transition-colors duration-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                    <a href="#" class="text-white/20 hover:text-luxury-gold transition-colors duration-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="#" class="text-white/20 hover:text-luxury-gold transition-colors duration-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ once: true });
 
-        // Efek Ambient Glow Mengikuti Kursor
-        const glow = document.getElementById('glow');
-        window.addEventListener('mousemove', (e) => {
-            const xPercent = (e.clientX / window.innerWidth) * 100;
-            const yPercent = (e.clientY / window.innerHeight) * 100;
-            glow.style.setProperty('--mouse-x', `${xPercent}%`);
-            glow.style.setProperty('--mouse-y', `${yPercent}%`);
+    <!-- ============================== -->
+    <!-- JAVASCRIPT                     -->
+    <!-- ============================== -->
+    <script>
+        // === Inisialisasi AOS (Animate On Scroll) ===
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                once: true,
+                offset: 80,
+                easing: 'ease-out-cubic',
+            });
         });
 
-        // Kontrol Navbar Scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+        // === Efek Mouse Follower Glow ===
+        const mouseGlow = document.getElementById('mouse-glow');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', function(e) {
+            mouseGlow.style.left = e.clientX + 'px';
+            mouseGlow.style.top = e.clientY + 'px';
+        });
+
+        // Sembunyikan glow pada perangkat sentuh
+        if ('ontouchstart' in window) {
+            mouseGlow.style.display = 'none';
+        }
+
+        // === Navigasi Glassmorphism saat Scroll ===
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 80) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // === Menu Mobile Toggle ===
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const hamburger = document.querySelector('.hamburger');
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // === Counter Animasi untuk Statistik ===
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.getAttribute('data-count'));
+                    let current = 0;
+                    const increment = target / 60;
+                    const timer = setInterval(function() {
+                        current += increment;
+                        if (current >= target) {
+                            entry.target.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            entry.target.textContent = Math.floor(current) + '+';
+                        }
+                    }, 30);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(function(counter) {
+            counterObserver.observe(counter);
+        });
+
+        // === Animasi Skill Bar ===
+        const skillBars = document.querySelectorAll('.skill-bar-fill');
+        const skillObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillBars.forEach(function(bar) {
+            skillObserver.observe(bar);
+        });
+
+        // === Jam Realtime ===
+        function updateClock() {
+            const now = new Date();
+            const options = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                timeZone: 'Asia/Jakarta',
+                hour12: false 
+            };
+            const timeStr = now.toLocaleTimeString('id-ID', options);
+            const clockEl = document.getElementById('realtime-clock');
+            if (clockEl) {
+                clockEl.textContent = 'WIB ' + timeStr;
+            }
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // === Tahun Footer ===
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        // === Simulasi Data Realtime (Metrik) ===
+        function updateMetrics() {
+            // Simulasi perubahan metrik kecil
+            const uptimeEl = document.getElementById('metric-uptime');
+            const responseEl = document.getElementById('metric-response');
+            const requestsEl = document.getElementById('metric-requests');
+            const errorEl = document.getElementById('metric-error');
+
+            const uptimeValues = ['99.97%', '99.98%', '99.99%', '99.98%'];
+            const responseValues = ['38ms', '42ms', '45ms', '40ms', '37ms', '44ms'];
+            const requestValues = ['11.8K', '12.1K', '12.4K', '12.9K', '13.2K', '11.5K'];
+            const errorValues = ['0.01%', '0.02%', '0.01%', '0.00%', '0.01%'];
+
+            uptimeEl.textContent = uptimeValues[Math.floor(Math.random() * uptimeValues.length)];
+            responseEl.textContent = responseValues[Math.floor(Math.random() * responseValues.length)];
+            requestsEl.textContent = requestValues[Math.floor(Math.random() * requestValues.length)];
+            errorEl.textContent = errorValues[Math.floor(Math.random() * errorValues.length)];
+        }
+
+        setInterval(updateMetrics, 3000);
+
+        // === Simulasi Activity Log ===
+        const logMessages = [
+            { type: 'info', msg: 'GET /api/v2/users — 200 OK — 12ms' },
+            { type: 'info', msg: 'POST /api/v2/orders — 201 Created — 34ms' },
+            { type: 'info', msg: 'WebSocket connection established — client_7842' },
+            { type: 'warn', msg: 'Cache miss — key: user_session_3291 — fallback to DB' },
+            { type: 'info', msg: 'GET /api/v2/products?page=3 — 200 OK — 8ms' },
+            { type: 'info', msg: 'Health check passed — all 12 services operational' },
+            { type: 'info', msg: 'PUT /api/v2/inventory/batch — 200 OK — 67ms' },
+            { type: 'info', msg: 'JWT token refreshed — user_id: 4521' },
+            { type: 'warn', msg: 'Rate limit approaching — 850/1000 req/min — IP: 103.x.x.x' },
+            { type: 'info', msg: 'DELETE /api/v2/cache/stale — 204 No Content — 3ms' },
+            { type: 'info', msg: 'Kafka consumer processed 1,247 events — partition 3' },
+            { type: 'info', msg: 'GET /api/v2/analytics/realtime — 200 OK — 22ms' },
+            { type: 'info', msg: 'New deployment detected — v2.14.7 — rolling update started' },
+            { type: 'info', msg: 'PostgreSQL query optimized — 340ms → 12ms' },
+            { type: 'info', msg: 'Redis cluster rebalanced — 3 nodes active' },
+        ];
+
+        const activityLog = document.getElementById('activity-log');
+        let logIndex = 0;
+
+        function addLogEntry() {
+            const log = logMessages[logIndex % logMessages.length];
+            const now = new Date();
+            const time = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            
+            const entry = document.createElement('div');
+            entry.className = 'flex items-start space-x-3 opacity-0';
+            entry.style.transition = 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            
+            const colorClass = log.type === 'warn' ? 'text-yellow-500/60' : 'text-green-500/40';
+            const msgColor = log.type === 'warn' ? 'text-yellow-500/40' : 'text-white/30';
+            
+            entry.innerHTML = `
+                <span class="text-white/15 shrink-0">[${time}]</span>
+                <span class="${colorClass} shrink-0">${log.type === 'warn' ? 'WARN' : ' INF'}</span>
+                <span class="${msgColor}">${log.msg}</span>
+            `;
+            
+            // Tambahkan di atas
+            activityLog.insertBefore(entry, activityLog.firstChild);
+            
+            // Animasi masuk
+            requestAnimationFrame(function() {
+                entry.style.opacity = '1';
+            });
+            
+            // Batasi jumlah log yang ditampilkan
+            while (activityLog.children.length > 8) {
+                activityLog.removeChild(activityLog.lastChild);
+            }
+            
+            logIndex++;
+        }
+
+        // Tambahkan beberapa log awal
+        for (let i = 0; i < 5; i++) {
+            setTimeout(function() { addLogEntry(); }, i * 200);
+        }
+
+        // Lanjutkan menambah log secara berkala
+        setInterval(addLogEntry, 2500);
+
+        // === Handle Form Submit ===
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btnText = document.getElementById('btn-text');
+            const btnSuccess = document.getElementById('btn-success');
+            
+            btnText.classList.add('hidden');
+            btnSuccess.classList.remove('hidden');
+            
+            setTimeout(function() {
+                btnText.classList.remove('hidden');
+                btnSuccess.classList.add('hidden');
+                e.target.reset();
+            }, 3000);
+        }
+
+        // === Smooth Scroll untuk Link Navigasi ===
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
+
 </body>
 </html>
+```
